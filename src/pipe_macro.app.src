@@ -1,0 +1,13 @@
+{application, pipe_macro, [
+    {description, "A macro library"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib
+    ]},
+    {env, []},
+    {modules, []},
+    {licenses, ["GPL-3.0-only"]},
+    {links, []}
+ ]}.
