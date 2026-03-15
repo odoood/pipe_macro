@@ -6,7 +6,7 @@ Erlang macro to mimic the Elixir pipe operator.
 Build
 -----
 
-The only source file is the header `src/pipe_macro.hrl` which defines the macro
+The main file is the header `include/pipe_macro.hrl` which defines the macro,
 so there's nothing to compile.
 
 Test

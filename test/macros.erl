@@ -20,7 +20,7 @@
 -module(macros).
 -include_lib("eunit/include/eunit.hrl").
 
--include("../src/pipe_macro.hrl").
+-include("../include/pipe_macro.hrl").
 
 pipe_test() ->
 
