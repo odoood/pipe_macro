@@ -18,7 +18,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {application, pipe_macro, [
-    {description, "A macro library"},
+    {description, "An Erlang macro to mimic the Elixir pipe operator."},
     {vsn, "0.1.0"},
     {registered, []},
     {applications, [
@@ -28,5 +28,5 @@
     {env, []},
     {modules, []},
     {licenses, ["GPL-3.0-only"]},
-    {links, []}
- ]}.
+    {links, [{"Github", "https://github.com/odoood/pipe_macro"}]}
+]}.

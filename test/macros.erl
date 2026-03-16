@@ -22,6 +22,66 @@
 
 -include("../include/pipe_macro.hrl").
 
+%% Copied from the Erlang docs programming examples
+ints_from(N) ->
+  fun() ->
+    [N|ints_from(N+1)]
+  end.
+
+pipe_doc_test() ->
+  [1, 2, 3] = ?PIPE([1, [2], 3], lists:flatten(?PARG)),
+
+  [2, 4, 6] = ?PIPE([1, [2], 3],
+                    lists:flatten(?PARG),
+                    lists:map(fun(X) -> X * 2 end, ?PARG)),
+
+  %% This will cause a compiler warning due to no `?PARG' in the 2nd expression
+  [8, 10, 12] = ?PIPE([1, [2], 3], % this goes unused and triggers a warning
+                      lists:flatten([4,[5],6]),
+                      lists:map(fun(X) -> X * 2 end, ?PARG)), % uses flatten result
+
+  %% Use bound vars in pipeline
+  Me = pid_to_list(self()),
+  [$I,$\ ,$a,$m,$:|Me] = ?PIPE(Me, lists:append(["I am:", ?PARG])),
+
+  %% Create a nested anonymous function
+  Upcase_word = ?PIPE(fun(X) when $a =< X,  X =< $z -> X + $A - $a; (X) -> X end,
+                      fun(X) -> lists:map(?PARG, X) end),
+
+  "ERLANG" = Upcase_word("Erlang"),
+
+  ["I","LIKE","ERLANG"] = lists:map(Upcase_word, ["I","like","Erlang"]),
+
+  XX = ints_from(1),
+
+  First = hd(XX()),
+  Tail1 = tl(XX()),
+
+  Second = hd(Tail1()),
+  Tail2 = tl(Tail1()),
+
+  Third = hd(Tail2()),
+  Tail3 = tl(Tail2()),
+
+  Fourth = hd(Tail3()),
+  Tail4 = tl(Tail3()),
+
+  Fifth = hd(Tail4()),
+
+  [1, 2, 3, 4, 5] = [First, Second, Third, Fourth, Fifth],
+
+  YY = ints_from(1),
+
+  %% Complicated, and may cause blindness, but works the same
+  [1, 2, 3, 4, 5] =
+    ?PIPE([tl(YY()), hd(YY())],
+          [tl((hd(?PARG))()), hd((hd(?PARG))()) | tl(?PARG)],
+          [tl((hd(?PARG))()), hd((hd(?PARG))()) | tl(?PARG)],
+          [tl((hd(?PARG))()), hd((hd(?PARG))()) | tl(?PARG)],
+          [tl((hd(?PARG))()), hd((hd(?PARG))()) | tl(?PARG)],
+          lists:reverse(tl(?PARG))),
+  ok.
+
 pipe_test() ->
 
   %% Pass a term to a func
