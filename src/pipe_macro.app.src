@@ -19,7 +19,7 @@
 
 {application, pipe_macro, [
     {description, "An Erlang macro to mimic the Elixir pipe operator."},
-    {vsn, "0.1.0"},
+    {vsn, "1.0.0"},
     {registered, []},
     {applications, [
         kernel,
